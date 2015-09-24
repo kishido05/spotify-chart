@@ -328,16 +328,21 @@ public class HomeActivity extends Activity {
         apiHelper.getTracks(rank, country, windowType, date, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
 
                 toggleLoadingIndicator(false);
 
-                try {
-                    displayTracks(response.getJSONArray("tracks"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            displayTracks(response.getJSONArray("tracks"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
 
             @Override
