@@ -302,6 +302,8 @@ public class HomeActivity extends Activity {
 
         toggleLoadingIndicator(true);
 
+        findViewById(R.id.emptyView).setVisibility(View.INVISIBLE);
+
         apiHelper.getTracks(rank, country, windowType, date, new JsonHttpResponseHandler() {
 
             @Override
