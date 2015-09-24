@@ -16,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +52,7 @@ public class HomeActivity extends Activity {
 
         trackList = (ListView) findViewById(R.id.listTracks);
         trackListAdapter = new TrackListAdapter(this);
+        trackList.setEmptyView(findViewById(R.id.emptyView));
         trackList.setAdapter(trackListAdapter);
 
         countryISOList = new HashMap<String, String>();
@@ -336,21 +336,16 @@ public class HomeActivity extends Activity {
         apiHelper.getTracks(rank, country, windowType, date, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
 
                 toggleLoadingIndicator(false);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            displayTracks(response.getJSONArray("tracks"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                try {
+                    displayTracks(response.getJSONArray("tracks"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -400,7 +395,6 @@ public class HomeActivity extends Activity {
         int len = tracks.length();
 
         trackListAdapter.clear();
-        trackList.setEmptyView(findViewById(R.id.emptyView));
 
         for (int i=0; i<len; i++) {
             JSONObject object = tracks.getJSONObject(i);
