@@ -39,6 +39,10 @@ public class HomeActivity extends Activity {
         panelSpinner = (ViewGroup) findViewById(R.id.panelSpinner);
 
         apiHelper = new SpotifyApiHelper();
+        loadChartRanks();
+    }
+
+    private void loadChartRanks() {
         apiHelper.getTracks(new JsonHttpResponseHandler() {
 
             @Override
@@ -94,6 +98,10 @@ public class HomeActivity extends Activity {
         ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ranks);
         rankSpin.setAdapter(rankAdapter);
 
+        loadChartCountries();
+    }
+
+    private void loadChartCountries() {
         apiHelper.getTracks(getSelectedItem(rankSpin), new JsonHttpResponseHandler() {
 
             @Override
@@ -142,6 +150,10 @@ public class HomeActivity extends Activity {
         countrySpin = new Spinner(this);
         createSpinner(countrySpin, countries);
 
+        loadChartWindowTypes();
+    }
+
+    private void loadChartWindowTypes() {
         apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), new JsonHttpResponseHandler() {
 
             @Override
@@ -190,6 +202,10 @@ public class HomeActivity extends Activity {
         windowTypeSpin = new Spinner(this);
         createSpinner(windowTypeSpin, windowTypes);
 
+        loadChartDates();
+    }
+
+    private void loadChartDates() {
         apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), getSelectedItem(windowTypeSpin), new JsonHttpResponseHandler() {
 
             @Override
