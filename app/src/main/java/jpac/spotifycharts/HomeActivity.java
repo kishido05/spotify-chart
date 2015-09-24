@@ -99,8 +99,8 @@ public class HomeActivity extends Activity {
 
         ArrayList<String> ranks = new ArrayList<String>();
 
+        Locale locale = Locale.getDefault();
         for (int i=0; i<len; i++) {
-            Locale locale = Locale.getDefault();
             ranks.add(response.getString(i).replace('_', ' ').toUpperCase(locale));
         }
 
@@ -146,8 +146,8 @@ public class HomeActivity extends Activity {
 
         countryISOList.clear();
 
+        Locale locale = Locale.getDefault();
         for (int i=0; i<len; i++) {
-            Locale locale = Locale.getDefault();
             String iso = response.getString(i);
             if (iso.equals("global")) {
                 countryISOList.put(iso, iso);
@@ -186,8 +186,8 @@ public class HomeActivity extends Activity {
 
         ArrayList<String> windowTypes = new ArrayList<String>();
 
+        Locale locale = Locale.getDefault();
         for (int i=0; i<len; i++) {
-            Locale locale = Locale.getDefault();
             windowTypes.add(response.getString(i).toUpperCase(locale));
         }
 
@@ -220,8 +220,8 @@ public class HomeActivity extends Activity {
 
         ArrayList<String> dates = new ArrayList<String>();
 
+        Locale locale = Locale.getDefault();
         for (int i=0; i<len; i++) {
-            Locale locale = Locale.getDefault();
             dates.add(response.getString(i).toUpperCase(locale));
         }
 
