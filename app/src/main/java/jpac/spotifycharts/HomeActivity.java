@@ -162,7 +162,12 @@ public class HomeActivity extends Activity {
 
         for (int i=0; i<len; i++) {
             Locale locale = Locale.getDefault();
-            countries.add(response.getString(i).toUpperCase(locale));
+            String iso = response.getString(i);
+            if (iso.equals("global")) {
+                countries.add(0, iso.toUpperCase(locale));
+            } else {
+                countries.add(iso.toUpperCase(locale));
+            }
         }
 
         countrySpin = new Spinner(this);
