@@ -47,6 +47,7 @@ public class HomeActivity extends Activity {
 
         trackList = (ListView) findViewById(R.id.listTracks);
         trackListAdapter = new TrackListAdapter(this);
+        trackList.setAdapter(trackListAdapter);
 
         apiHelper = new SpotifyApiHelper();
         loadChartRanks();
