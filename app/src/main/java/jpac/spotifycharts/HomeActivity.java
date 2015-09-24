@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -263,6 +264,8 @@ public class HomeActivity extends Activity {
         dateSpin = new Spinner(this);
         createSpinner(dateSpin, dates);
 
+        initializeSpinnerAction();
+
         loadChartTracks();
     }
 
@@ -330,6 +333,26 @@ public class HomeActivity extends Activity {
                 toggleLoadingIndicator(false);
             }
         });
+    }
+
+    private void initializeSpinnerAction() {
+        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                loadChartTracks();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        };
+
+        rankSpin.setOnItemSelectedListener(listener);
+        countrySpin.setOnItemSelectedListener(listener);
+        windowTypeSpin.setOnItemSelectedListener(listener);
+        dateSpin.setOnItemSelectedListener(listener);
     }
 
     private void displayTracks(JSONArray tracks) throws JSONException {
