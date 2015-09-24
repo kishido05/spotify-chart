@@ -289,7 +289,7 @@ public class HomeActivity extends Activity {
 
     private String getSelectedItem(Spinner spinner) {
         Locale locale = Locale.getDefault();
-        return spinner.getSelectedItem().toString().toLowerCase(locale);
+        return spinner.getSelectedItem().toString().replace(' ', '_').toLowerCase(locale);
     }
 
     private void adjustSpinnerLayout(Spinner spinner) {
@@ -311,7 +311,7 @@ public class HomeActivity extends Activity {
     }
 
     private void loadChartTracks() {
-        String rank = getSelectedItem(rankSpin).replace(' ', '_');
+        String rank = getSelectedItem(rankSpin);
         String country = getSelectedItem(countrySpin);
         String windowType = getSelectedItem(windowTypeSpin);
         String date = getSelectedItem(dateSpin);
