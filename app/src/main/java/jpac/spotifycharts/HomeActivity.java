@@ -93,7 +93,7 @@ public class HomeActivity extends Activity {
         ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ranks);
         rankSpin.setAdapter(rankAdapter);
 
-        apiHelper.getTracks(ranks.get(0), new JsonHttpResponseHandler() {
+        apiHelper.getTracks(getSelectedItem(rankSpin), new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -151,7 +151,7 @@ public class HomeActivity extends Activity {
 
         panelSpinner.addView(countrySpin);
 
-        apiHelper.getTracks(rankSpin.getSelectedItem().toString(), countries.get(0), new JsonHttpResponseHandler() {
+        apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -209,7 +209,7 @@ public class HomeActivity extends Activity {
 
         panelSpinner.addView(windowTypeSpin);
 
-        apiHelper.getTracks(rankSpin.getSelectedItem().toString(), countrySpin.getSelectedItem().toString(), windowTypes.get(0), new JsonHttpResponseHandler() {
+        apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), getSelectedItem(windowTypeSpin), new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -268,4 +268,7 @@ public class HomeActivity extends Activity {
         panelSpinner.addView(dateSpin);
     }
 
+    private String getSelectedItem(Spinner spinner) {
+        return spinner.getSelectedItem().toString();
+    }
 }
