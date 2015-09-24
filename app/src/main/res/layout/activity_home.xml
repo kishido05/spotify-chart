@@ -54,4 +54,14 @@
         android:text="@string/message_loading"
         roboto:fontStyle="light"/>
 
+    <jpac.spotifycharts.view.RobotoTextView
+        android:id="@+id/textError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:textColor="#ffff4444"
+        android:gravity="center"
+        roboto:fontStyle="light"
+        android:visibility="invisible"/>
+
 </RelativeLayout>

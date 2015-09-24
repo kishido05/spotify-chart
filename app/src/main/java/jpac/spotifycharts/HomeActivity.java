@@ -63,6 +63,7 @@ public class HomeActivity extends Activity {
         Typeface tf = FontUtils.open(this, "fonts/Roboto-Light.ttf");
         ((TextView) findViewById(R.id.textLoading)).setTypeface(tf);
         ((TextView) findViewById(R.id.emptyView)).setTypeface(tf);
+        ((TextView) findViewById(R.id.textError)).setTypeface(tf);
 
         countryISOList = new HashMap<String, String>();
 
@@ -71,7 +72,7 @@ public class HomeActivity extends Activity {
     }
 
     private void loadChartRanks() {
-        apiHelper.getTracks(new JsonHttpResponseHandler() {
+        apiHelper.getTracks(new SimpleJsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -82,27 +83,6 @@ public class HomeActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
             }
         });
     }
@@ -144,7 +124,7 @@ public class HomeActivity extends Activity {
     }
 
     private void loadChartCountries() {
-        apiHelper.getTracks(getSelectedItem(rankSpin), new JsonHttpResponseHandler() {
+        apiHelper.getTracks(getSelectedItem(rankSpin), new SimpleJsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -155,27 +135,6 @@ public class HomeActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
             }
         });
     }
@@ -207,7 +166,7 @@ public class HomeActivity extends Activity {
     }
 
     private void loadChartWindowTypes() {
-        apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), new JsonHttpResponseHandler() {
+        apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), new SimpleJsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -218,27 +177,6 @@ public class HomeActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
             }
         });
     }
@@ -260,7 +198,7 @@ public class HomeActivity extends Activity {
     }
 
     private void loadChartDates() {
-        apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), getSelectedItem(windowTypeSpin), new JsonHttpResponseHandler() {
+        apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), getSelectedItem(windowTypeSpin), new SimpleJsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -273,27 +211,6 @@ public class HomeActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
             }
         });
     }
@@ -367,8 +284,9 @@ public class HomeActivity extends Activity {
         toggleLoadingIndicator(true);
 
         findViewById(R.id.emptyView).setVisibility(View.INVISIBLE);
+        findViewById(R.id.textError).setVisibility(View.INVISIBLE);
 
-        apiHelper.getTracks(rank, country, windowType, date, new JsonHttpResponseHandler() {
+        apiHelper.getTracks(rank, country, windowType, date, new SimpleJsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -381,27 +299,6 @@ public class HomeActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-
-                toggleLoadingIndicator(false);
             }
         });
     }
@@ -446,4 +343,45 @@ public class HomeActivity extends Activity {
         trackListAdapter.notifyDataSetChanged();
     }
 
+    private class SimpleJsonHttpResponseHandler extends JsonHttpResponseHandler {
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            super.onFailure(statusCode, headers, responseString, throwable);
+
+            HomeActivity.this.toggleLoadingIndicator(false);
+
+            displayError(throwable.getMessage());
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+
+            HomeActivity.this.toggleLoadingIndicator(false);
+
+            displayError(throwable.getMessage());
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+
+            HomeActivity.this.toggleLoadingIndicator(false);
+
+            displayError(throwable.getMessage());
+        }
+
+        private void displayError(String message) {
+            HomeActivity.this.trackListAdapter.clear();
+            HomeActivity.this.trackListAdapter.notifyDataSetChanged();
+
+            findViewById(R.id.emptyView).setVisibility(View.INVISIBLE);
+
+            TextView error = (TextView) findViewById(R.id.textError);
+
+            error.setVisibility(View.VISIBLE);
+            error.setText(message);
+        }
+    }
 }
