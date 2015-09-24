@@ -124,7 +124,20 @@ public class HomeActivity extends Activity {
             ranks.add(response.getString(i).replace('_', ' ').toUpperCase(locale));
         }
 
-        ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ranks);
+        ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ranks) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                TextView textView = (TextView) v.findViewById(android.R.id.text1);
+
+                Typeface tf = FontUtils.open(getApplication(), "fonts/Roboto-Light.ttf");
+                textView.setTypeface(tf);
+
+                return v;
+            }
+        };
         rankSpin.setAdapter(rankAdapter);
 
         loadChartCountries();
@@ -326,7 +339,20 @@ public class HomeActivity extends Activity {
     private void createSpinner(Spinner spinner, List<String> items) {
         adjustSpinnerLayout(spinner);
 
-        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                TextView textView = (TextView) v.findViewById(android.R.id.text1);
+
+                Typeface tf = FontUtils.open(getApplication(), "fonts/Roboto-Light.ttf");
+                textView.setTypeface(tf);
+
+                return v;
+            }
+        };
         spinner.setAdapter(itemAdapter);
 
         panelSpinner.addView(spinner);
