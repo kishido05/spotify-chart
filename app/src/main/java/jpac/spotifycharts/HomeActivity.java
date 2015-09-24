@@ -208,6 +208,64 @@ public class HomeActivity extends Activity {
         windowTypeSpin.setAdapter(windowTypeAdapter);
 
         panelSpinner.addView(windowTypeSpin);
+
+        apiHelper.getTracks(rankSpin.getSelectedItem().toString(), countrySpin.getSelectedItem().toString(), windowTypes.get(0), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+
+                try {
+                    createDateSpinner(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                toggleLoadingIndicator(false);
+            }
+        });
+    }
+
+    private void createDateSpinner(JSONArray response) throws JSONException {
+        int len = response.length();
+
+        ArrayList<String> dates = new ArrayList<String>();
+
+        for (int i=0; i<len; i++) {
+            dates.add(response.getString(i));
+        }
+
+        ArrayAdapter<String> dateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dates);
+
+        dateSpin = new Spinner(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        dateSpin.setLayoutParams(params);
+        dateSpin.setAdapter(dateAdapter);
+
+        panelSpinner.addView(dateSpin);
     }
 
 }
