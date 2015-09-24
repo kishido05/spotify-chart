@@ -16,8 +16,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import jpac.spotifycharts.adapter.TrackListAdapter;
@@ -36,6 +38,9 @@ public class HomeActivity extends Activity {
 
     private ListView trackList;
     private TrackListAdapter trackListAdapter;
+
+    // keep track of ISO list provided by Spotify Chart
+    private ArrayList<String> countryISOList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +108,8 @@ public class HomeActivity extends Activity {
         ArrayList<String> ranks = new ArrayList<String>();
 
         for (int i=0; i<len; i++) {
-            ranks.add(response.getString(i));
+            Locale locale = Locale.getDefault();
+            ranks.add(response.getString(i).replace('_', ' ').toUpperCase(locale));
         }
 
         ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ranks);
@@ -155,7 +161,8 @@ public class HomeActivity extends Activity {
         ArrayList<String> countries = new ArrayList<String>();
 
         for (int i=0; i<len; i++) {
-            countries.add(response.getString(i));
+            Locale locale = Locale.getDefault();
+            countries.add(response.getString(i).toUpperCase(locale));
         }
 
         countrySpin = new Spinner(this);
@@ -207,7 +214,8 @@ public class HomeActivity extends Activity {
         ArrayList<String> windowTypes = new ArrayList<String>();
 
         for (int i=0; i<len; i++) {
-            windowTypes.add(response.getString(i));
+            Locale locale = Locale.getDefault();
+            windowTypes.add(response.getString(i).toUpperCase(locale));
         }
 
         windowTypeSpin = new Spinner(this);
@@ -261,7 +269,8 @@ public class HomeActivity extends Activity {
         ArrayList<String> dates = new ArrayList<String>();
 
         for (int i=0; i<len; i++) {
-            dates.add(response.getString(i));
+            Locale locale = Locale.getDefault();
+            dates.add(response.getString(i).toUpperCase(locale));
         }
 
         dateSpin = new Spinner(this);
@@ -279,7 +288,8 @@ public class HomeActivity extends Activity {
     }
 
     private String getSelectedItem(Spinner spinner) {
-        return spinner.getSelectedItem().toString();
+        Locale locale = Locale.getDefault();
+        return spinner.getSelectedItem().toString().toLowerCase(locale);
     }
 
     private void adjustSpinnerLayout(Spinner spinner) {
