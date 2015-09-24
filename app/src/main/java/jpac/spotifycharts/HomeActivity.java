@@ -150,6 +150,64 @@ public class HomeActivity extends Activity {
         countrySpin.setAdapter(rankAdapter);
 
         panelSpinner.addView(countrySpin);
+
+        apiHelper.getTracks(rankSpin.getSelectedItem().toString(), countries.get(0), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+
+                try {
+                    createWindowTypeSpinner(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                toggleLoadingIndicator(false);
+            }
+        });
+    }
+
+    private void createWindowTypeSpinner(JSONArray response) throws JSONException {
+        int len = response.length();
+
+        ArrayList<String> windowTypes = new ArrayList<String>();
+
+        for (int i=0; i<len; i++) {
+            windowTypes.add(response.getString(i));
+        }
+
+        ArrayAdapter<String> windowTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, windowTypes);
+
+        windowTypeSpin = new Spinner(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        windowTypeSpin.setLayoutParams(params);
+        windowTypeSpin.setAdapter(windowTypeAdapter);
+
+        panelSpinner.addView(windowTypeSpin);
     }
 
 }
