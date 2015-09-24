@@ -55,6 +55,8 @@ public class HomeActivity extends Activity {
         trackList.setEmptyView(findViewById(R.id.emptyView));
         trackList.setAdapter(trackListAdapter);
 
+        findViewById(R.id.emptyView).setVisibility(View.INVISIBLE);
+
         countryISOList = new HashMap<String, String>();
 
         apiHelper = new SpotifyApiHelper();
