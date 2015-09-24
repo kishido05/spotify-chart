@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +41,7 @@ public class HomeActivity extends Activity {
     private TrackListAdapter trackListAdapter;
 
     // keep track of ISO list provided by Spotify Chart
-    private ArrayList<String> countryISOList;
+    private HashMap<String, String> countryISOList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class HomeActivity extends Activity {
         trackList = (ListView) findViewById(R.id.listTracks);
         trackListAdapter = new TrackListAdapter(this);
         trackList.setAdapter(trackListAdapter);
+
+        countryISOList = new HashMap<String, String>();
 
         apiHelper = new SpotifyApiHelper();
         loadChartRanks();
@@ -160,13 +163,18 @@ public class HomeActivity extends Activity {
 
         ArrayList<String> countries = new ArrayList<String>();
 
+        countryISOList.clear();
+
         for (int i=0; i<len; i++) {
             Locale locale = Locale.getDefault();
             String iso = response.getString(i);
             if (iso.equals("global")) {
+                countryISOList.put(iso, iso);
                 countries.add(0, iso.toUpperCase(locale));
             } else {
-                countries.add(iso.toUpperCase(locale));
+                Locale fromIso = new Locale("", iso.toUpperCase(locale));
+                countryISOList.put(fromIso.getDisplayCountry().toLowerCase(locale), iso);
+                countries.add(fromIso.getDisplayCountry().toUpperCase(locale));
             }
         }
 
@@ -317,7 +325,7 @@ public class HomeActivity extends Activity {
 
     private void loadChartTracks() {
         String rank = getSelectedItem(rankSpin);
-        String country = getSelectedItem(countrySpin);
+        String country = countryISOList.get(getSelectedItem(countrySpin));
         String windowType = getSelectedItem(windowTypeSpin);
         String date = getSelectedItem(dateSpin);
 
