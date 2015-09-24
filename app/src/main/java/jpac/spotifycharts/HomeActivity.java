@@ -253,6 +253,8 @@ public class HomeActivity extends Activity {
 
         dateSpin = new Spinner(this);
         createSpinner(dateSpin, dates);
+
+        loadChartTracks();
     }
 
     private String getSelectedItem(Spinner spinner) {
@@ -276,4 +278,43 @@ public class HomeActivity extends Activity {
 
         panelSpinner.addView(spinner);
     }
+
+    private void loadChartTracks() {
+        String rank = getSelectedItem(rankSpin);
+        String country = getSelectedItem(countrySpin);
+        String windowType = getSelectedItem(windowTypeSpin);
+        String date = getSelectedItem(dateSpin);
+
+        apiHelper.getTracks(rank, country, windowType, date, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                toggleLoadingIndicator(false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                toggleLoadingIndicator(false);
+            }
+        });
+    }
+
 }
