@@ -311,7 +311,7 @@ public class HomeActivity extends Activity {
     }
 
     private void loadChartTracks() {
-        String rank = getSelectedItem(rankSpin);
+        String rank = getSelectedItem(rankSpin).replace(' ', '_');
         String country = getSelectedItem(countrySpin);
         String windowType = getSelectedItem(windowTypeSpin);
         String date = getSelectedItem(dateSpin);
