@@ -30,7 +30,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/message_no_data"
-        android:layout_below="@id/panelSpinner"/>
+        android:layout_below="@id/panelSpinner"
+        android:visibility="invisible"/>
 
     <ProgressBar
         android:id="@+id/loadingBar"
