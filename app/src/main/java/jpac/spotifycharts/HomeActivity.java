@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -18,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import jpac.spotifycharts.adapter.TrackListAdapter;
 import jpac.spotifycharts.api.SpotifyApiHelper;
+import jpac.spotifycharts.model.Track;
 
 /**
  * Created by syspaulo on 9/24/2015.
@@ -30,6 +33,9 @@ public class HomeActivity extends Activity {
     private ViewGroup panelSpinner;
     private Spinner rankSpin, countrySpin, windowTypeSpin, dateSpin;
 
+    private ListView trackList;
+    private TrackListAdapter trackListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,9 @@ public class HomeActivity extends Activity {
 
         rankSpin = (Spinner) findViewById(R.id.rankSpinner);
         panelSpinner = (ViewGroup) findViewById(R.id.panelSpinner);
+
+        trackList = (ListView) findViewById(R.id.listTracks);
+        trackListAdapter = new TrackListAdapter(this);
 
         apiHelper = new SpotifyApiHelper();
         loadChartRanks();
@@ -292,6 +301,12 @@ public class HomeActivity extends Activity {
                 super.onSuccess(statusCode, headers, response);
 
                 toggleLoadingIndicator(false);
+
+                try {
+                    displayTracks(response.getJSONArray("tracks"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -315,6 +330,27 @@ public class HomeActivity extends Activity {
                 toggleLoadingIndicator(false);
             }
         });
+    }
+
+    private void displayTracks(JSONArray tracks) throws JSONException {
+        int len = tracks.length();
+
+        trackListAdapter.clear();
+        trackList.setEmptyView(findViewById(R.id.emptyView));
+
+        for (int i=0; i<len; i++) {
+            JSONObject object = tracks.getJSONObject(i);
+
+            Track track = new Track();
+
+            track.setTrackName(object.getString("track_name"));
+            track.setArtistName(object.getString("artist_name"));
+            track.setArtworkUrl(object.getString("artwork_url"));
+
+            trackListAdapter.add(track);
+        }
+
+        trackListAdapter.notifyDataSetChanged();
     }
 
 }
