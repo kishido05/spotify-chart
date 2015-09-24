@@ -222,6 +222,8 @@ public class HomeActivity extends Activity {
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
 
+                toggleLoadingIndicator(false);
+
                 try {
                     createDateSpinner(response);
                 } catch (JSONException e) {
@@ -296,6 +298,8 @@ public class HomeActivity extends Activity {
         String country = getSelectedItem(countrySpin);
         String windowType = getSelectedItem(windowTypeSpin);
         String date = getSelectedItem(dateSpin);
+
+        toggleLoadingIndicator(true);
 
         apiHelper.getTracks(rank, country, windowType, date, new JsonHttpResponseHandler() {
 
