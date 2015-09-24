@@ -5,9 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import jpac.spotifycharts.R;
 import jpac.spotifycharts.model.Track;
 
 /**
@@ -52,6 +57,37 @@ public class TrackListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        ViewHolder holder;
+
+        if (view == null) {
+            view = inflater.inflate(R.layout.list_item_track, null);
+
+            holder = new ViewHolder();
+            holder.imageArtwork = (ImageView) view.findViewById(R.id.imageArtwork);
+            holder.textTrackName = (TextView) view.findViewById(R.id.textTrackName);
+            holder.textArtistName = (TextView) view.findViewById(R.id.textArtistName);
+
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
+
+        Track track = tracks.get(i);
+
+        holder.textTrackName.setText(track.getTrackName());
+        holder.textArtistName.setText(track.getArtistName());
+
+        Glide.with(context)
+                .load(track.getArtworkUrl())
+                .override(200, 200)
+                .into(holder.imageArtwork);
+
+        return view;
+    }
+
+    static class ViewHolder {
+
+        ImageView imageArtwork;
+        TextView textTrackName, textArtistName;
     }
 }
