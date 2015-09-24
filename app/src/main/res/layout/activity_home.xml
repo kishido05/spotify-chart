@@ -7,14 +7,16 @@
     <Spinner
         android:id="@+id/rankSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/panelSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/rankSpinner">
+        android:layout_below="@id/rankSpinner"
+        android:visibility="gone">
 
     </LinearLayout>
 

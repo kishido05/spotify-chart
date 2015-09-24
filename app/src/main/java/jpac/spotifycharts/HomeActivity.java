@@ -267,9 +267,15 @@ public class HomeActivity extends Activity {
         dateSpin = new Spinner(this);
         createSpinner(dateSpin, dates);
 
+        displaySpinner();
         initializeSpinnerAction();
 
         loadChartTracks();
+    }
+
+    private void displaySpinner() {
+        rankSpin.setVisibility(View.VISIBLE);
+        panelSpinner.setVisibility(View.VISIBLE);
     }
 
     private String getSelectedItem(Spinner spinner) {
