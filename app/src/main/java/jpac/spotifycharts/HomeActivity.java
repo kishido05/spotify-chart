@@ -141,12 +141,7 @@ public class HomeActivity extends Activity {
         ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countries);
 
         countrySpin = new Spinner(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-        countrySpin.setLayoutParams(params);
+        adjustSpinnerLayout(countrySpin);
         countrySpin.setAdapter(rankAdapter);
 
         panelSpinner.addView(countrySpin);
@@ -199,12 +194,7 @@ public class HomeActivity extends Activity {
         ArrayAdapter<String> windowTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, windowTypes);
 
         windowTypeSpin = new Spinner(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-        windowTypeSpin.setLayoutParams(params);
+        adjustSpinnerLayout(windowTypeSpin);
         windowTypeSpin.setAdapter(windowTypeAdapter);
 
         panelSpinner.addView(windowTypeSpin);
@@ -257,12 +247,7 @@ public class HomeActivity extends Activity {
         ArrayAdapter<String> dateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dates);
 
         dateSpin = new Spinner(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-        dateSpin.setLayoutParams(params);
+        adjustSpinnerLayout(dateSpin);
         dateSpin.setAdapter(dateAdapter);
 
         panelSpinner.addView(dateSpin);
@@ -270,5 +255,14 @@ public class HomeActivity extends Activity {
 
     private String getSelectedItem(Spinner spinner) {
         return spinner.getSelectedItem().toString();
+    }
+
+    private void adjustSpinnerLayout(Spinner spinner) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        spinner.setLayoutParams(params);
     }
 }
