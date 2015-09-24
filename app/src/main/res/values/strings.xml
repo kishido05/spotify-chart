@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Spotify Charts</string>
     <string name="message_loading">Loading...</string>
+    <string name="message_no_data">No date for these options!</string>
 </resources>
