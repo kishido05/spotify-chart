@@ -1,6 +1,7 @@
 package jpac.spotifycharts;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -25,6 +27,7 @@ import cz.msebera.android.httpclient.Header;
 import jpac.spotifycharts.adapter.TrackListAdapter;
 import jpac.spotifycharts.api.SpotifyApiHelper;
 import jpac.spotifycharts.model.Track;
+import jpac.spotifycharts.utils.FontUtils;
 
 /**
  * Created by syspaulo on 9/24/2015.
@@ -56,6 +59,10 @@ public class HomeActivity extends Activity {
         trackList.setAdapter(trackListAdapter);
 
         findViewById(R.id.emptyView).setVisibility(View.INVISIBLE);
+
+        Typeface tf = FontUtils.open(this, "fonts/Roboto-Light.ttf");
+        ((TextView) findViewById(R.id.textLoading)).setTypeface(tf);
+        ((TextView) findViewById(R.id.emptyView)).setTypeface(tf);
 
         countryISOList = new HashMap<String, String>();
 
