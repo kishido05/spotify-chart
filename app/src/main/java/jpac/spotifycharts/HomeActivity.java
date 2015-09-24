@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import jpac.spotifycharts.api.SpotifyApiHelper;
@@ -138,13 +139,8 @@ public class HomeActivity extends Activity {
             countries.add(response.getString(i));
         }
 
-        ArrayAdapter<String> rankAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countries);
-
         countrySpin = new Spinner(this);
-        adjustSpinnerLayout(countrySpin);
-        countrySpin.setAdapter(rankAdapter);
-
-        panelSpinner.addView(countrySpin);
+        createSpinner(countrySpin, countries);
 
         apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), new JsonHttpResponseHandler() {
 
@@ -191,13 +187,8 @@ public class HomeActivity extends Activity {
             windowTypes.add(response.getString(i));
         }
 
-        ArrayAdapter<String> windowTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, windowTypes);
-
         windowTypeSpin = new Spinner(this);
-        adjustSpinnerLayout(windowTypeSpin);
-        windowTypeSpin.setAdapter(windowTypeAdapter);
-
-        panelSpinner.addView(windowTypeSpin);
+        createSpinner(windowTypeSpin, windowTypes);
 
         apiHelper.getTracks(getSelectedItem(rankSpin), getSelectedItem(countrySpin), getSelectedItem(windowTypeSpin), new JsonHttpResponseHandler() {
 
@@ -244,13 +235,8 @@ public class HomeActivity extends Activity {
             dates.add(response.getString(i));
         }
 
-        ArrayAdapter<String> dateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dates);
-
         dateSpin = new Spinner(this);
-        adjustSpinnerLayout(dateSpin);
-        dateSpin.setAdapter(dateAdapter);
-
-        panelSpinner.addView(dateSpin);
+        createSpinner(dateSpin, dates);
     }
 
     private String getSelectedItem(Spinner spinner) {
@@ -264,5 +250,14 @@ public class HomeActivity extends Activity {
                 1.0f
         );
         spinner.setLayoutParams(params);
+    }
+
+    private void createSpinner(Spinner spinner, List<String> items) {
+        adjustSpinnerLayout(spinner);
+
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        spinner.setAdapter(itemAdapter);
+
+        panelSpinner.addView(spinner);
     }
 }
