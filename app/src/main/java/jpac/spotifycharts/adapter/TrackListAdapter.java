@@ -1,6 +1,7 @@
 package jpac.spotifycharts.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 import jpac.spotifycharts.R;
 import jpac.spotifycharts.model.Track;
+import jpac.spotifycharts.utils.FontUtils;
 
 /**
  * Created by syspaulo on 9/24/2015.
@@ -62,10 +64,15 @@ public class TrackListAdapter extends BaseAdapter {
         if (view == null) {
             view = inflater.inflate(R.layout.list_item_track, null);
 
+            Typeface tf = FontUtils.open(context, "fonts/Roboto-Light.ttf");
             holder = new ViewHolder();
+
             holder.imageArtwork = (ImageView) view.findViewById(R.id.imageArtwork);
             holder.textTrackName = (TextView) view.findViewById(R.id.textTrackName);
             holder.textArtistName = (TextView) view.findViewById(R.id.textArtistName);
+
+            holder.textTrackName.setTypeface(tf, Typeface.BOLD);
+            holder.textArtistName.setTypeface(tf);
 
             view.setTag(holder);
         } else {
